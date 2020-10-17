@@ -7,6 +7,7 @@ import AuthScreen from './pages/AuthScreen';
 import DashboardScreen from './pages/DashboardScreen';
 import ProfileScreen from './pages/ProfileScreen';
 import AchievementPage from './pages/AchievementPage';
+import PrivateRoute from './PrivateRoutes';
 
 function App() {
   return (
@@ -15,8 +16,8 @@ function App() {
         <Switch>
           <Route exact path="/" component={AuthScreen}/>
           <Route exact path='/dashboard' component={DashboardScreen}/>
-          <Route exact path="/profile" component={ProfileScreen}/>
-          <Route exact path="/achievement" component={AchievementPage}/>
+          <PrivateRoute exact path="/profile" component={ProfileScreen}/>
+          <PrivateRoute exact path="/achievement" component={AchievementPage}/>
         </Switch>
       </BrowserRouter>
     </div>
