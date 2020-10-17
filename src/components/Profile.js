@@ -8,7 +8,7 @@ import {
 export class Profile extends Component {
     render() {
         return (
-            <div>
+            <div style={{height:"88vh",paddingTop:30}}>
                 <div className="container profile">
                     <h1 className="headings">Profile</h1>
                     <div className="row">

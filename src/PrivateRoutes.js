@@ -6,13 +6,14 @@ function PrivateRoute({ component: Component, ...rest }, props) {
     const { token } = useClientContext();
 
     useEffect(() => {
-        console.log(token)
+        if(token)
+            console.log(token);
     }, [token]);
 
     return (
         <Route {...rest}
             render={(props) =>
-                token !== null ?
+                token !== "" ?
                     (
                         <Component {...rest} {...props} />
                     ) :

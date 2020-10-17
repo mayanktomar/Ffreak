@@ -2,8 +2,12 @@ import { createContext, useContext } from 'react';
 
 //Auth Context
 export const ClientContext = createContext({
-    token: '',
-    setToken: (data) => { }
+    token: null,
+    setToken: (data) => { },
+    data:null,
+    setData:(data)=>{},
+    userId:null,
+    setUserId:(data)=>{}
 });
 
 //Use Auth Context

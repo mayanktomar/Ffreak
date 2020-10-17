@@ -38,7 +38,7 @@ export class UserDashboard extends Component {
     }
     render() {
         return (
-            <div>
+            <div style={{height:"88vh",paddingTop:30}}>
                  <Modal isOpen={this.state.isFoodModalOpen} toggle={this.toggleFoodModal}>
                     <ModalHeader toggle={this.toggleFoodModal}>Add food</ModalHeader>
                     <ModalBody>

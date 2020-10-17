@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { Button,Modal, ModalHeader, ModalBody, ModalFooter,Form, FormGroup, Label, Input, FormTex } from 'reactstrap';
+import { Button } from 'reactstrap';
 import headvector from "../assets/headvector.svg";
-import axios from "axios";
 import RegisterModal from './RegisterModal';
+import LoginModal from './LoginModal';
 
 export class AskLogin extends Component {
     constructor(props)
@@ -10,12 +10,19 @@ export class AskLogin extends Component {
         super(props);
         this.state={
             isRegModalOpen:false,
+            isLogModalOpen:false
         }
     }
 
     toggleRegModal=()=>{
         this.setState({
           isRegModalOpen:!this.state.isRegModalOpen
+        })
+    }
+
+    toggleLogModal=()=>{
+        this.setState({
+          isLogModalOpen:!this.state.isLogModalOpen
         })
     }
     
@@ -28,7 +35,7 @@ export class AskLogin extends Component {
                         <h1>Lorem Ipsum Dolor Loren Ipsum Dolor</h1>
                         <p style={{fontFamily:'italic'}}>Loren Ipsum Dolor</p>
                         <br/>
-                        <Button style={{backgroundColor:'#ffe02c',width:'75%',color:'black'}}>Login</Button>
+                        <Button style={{backgroundColor:'#ffe02c',width:'75%',color:'black'}} onClick={this.toggleLogModal}>Login</Button>
                         <br/>
                         <br/>
                         <Button style={{backgroundColor:'#ffe02c',width:'75%',color:'black'}} onClick={this.toggleRegModal}>Register</Button>
@@ -39,6 +46,7 @@ export class AskLogin extends Component {
                 </div>
             </div>
             <RegisterModal isRegModalOpen={this.state.isRegModalOpen} toggleRegModal={this.toggleRegModal}/>
+            <LoginModal isLogModalOpen={this.state.isLogModalOpen} toggleLogModal={this.toggleLogModal}/>
         </div>
         )
     }

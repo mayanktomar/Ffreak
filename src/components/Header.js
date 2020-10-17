@@ -13,8 +13,10 @@ import {
     DropdownItem,
     NavbarText
   } from 'reactstrap';
+  import {ClientContext} from '../context/clientContext';
 
 export class Header extends Component {
+    static contextType = ClientContext;
     constructor(props)
     {
         super(props);
@@ -29,16 +31,12 @@ export class Header extends Component {
             isOpen:!this.state.isOpen
         })
     }
-
    
     render() {
         return (
             <div>
-
-              
-
-                 <Navbar dark expand="md">
-        <NavbarBrand href="/">Ffreak</NavbarBrand>
+        <Navbar dark expand="md">
+        <NavbarBrand href={this.context.token!==""?'/dashboard':"/"}>Ffreak</NavbarBrand>
         <NavbarToggler onClick={this.toggle} />
         <Collapse isOpen={this.state.isOpen} navbar>
           <Nav className="mr-auto" navbar>
@@ -47,8 +45,6 @@ export class Header extends Component {
           <NavbarText><i class="fa fa-user" aria-hidden="true"></i></NavbarText>
         </Collapse>
       </Navbar>
-
-      
             </div>
         )
     }
