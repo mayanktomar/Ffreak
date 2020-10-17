@@ -1,4 +1,4 @@
-.App {
+/* .App {
   text-align: center;
 }
 
@@ -35,4 +35,99 @@
   to {
     transform: rotate(360deg);
   }
+} */
+
+body{
+  background-color: #212121  !important; 
+ color:white !important;
+}
+
+.headings{
+  text-align: center;
+  margin-bottom: 5%;
+}
+th,td{
+  color: white;
+}
+table{
+  width: 100%;
+}
+.copyright {
+  width: 100%;
+  height: 60px;
+  background-color: #3F3D56;
+  position: absolute;
+  bottom: 0;
+}
+
+.copyright .content {
+  color: white;
+  position: relative;
+  top: 15px;
+  width: 100%;
+  text-align: center;
+}
+
+.navbar-dark .navbar-brand{
+  color: black !important;
+}
+h1,p,h2{
+  color:white
+}
+.navbar-dark{
+  background-color: #ffe02c;
+}
+
+.btn .btn-secondary
+{
+  background-color: #ffe02c;
+}
+
+.loginhead{
+  padding-top: 10%;
+}
+.loginhead img{
+  width: 100%;
+  height:auto;
+}
+
+.dashhead{
+  padding-top: 5%;
+}
+.dashhead h2{
+  text-align: center;
+}
+.CircularProgressbar{
+  width: 50% !important;
+  display: block !important;
+  margin:auto !important;
+}
+
+.dashhead .card1{
+  background-color: #222222;
+  color: white;
+  border: 2px solid #3e98c7;
+  border-radius: 10%;
+}
+
+.dashhead .card2{
+  background-color: #222222;
+  color: white;
+  border: 2px solid #ffe02c;
+  border-radius: 10%;
+}
+
+
+.profile{
+  padding-top: 5%;
+}
+
+.profile .card{
+  max-width: 50%;
+  display: block;
+  margin: auto;
+  background-color:#333333;
+  color:white;
+  text-align: center;
+  margin-bottom: 10%;
 }
