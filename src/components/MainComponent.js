@@ -7,20 +7,12 @@ import Profile from './Profile';
 import UserDashboard from './UserDashboard';
 
 export class MainComponent extends Component {
-    constructor(props)
-    {
+    constructor(props) {
         super(props);
-        
     }
     render() {
         return (
             <div>
-                <Header/>
-                {/* <AskLogin/> */}
-                {/* <UserDashboard/> */}
-                {/* <Profile/> */}
-                <Achievements/>
-                {/* <Footer/> */}
             </div>
         )
     }
