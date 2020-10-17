@@ -6,7 +6,7 @@ import Profile from '../components/Profile';
 function ProfileScreen(props){
     return (
         <>
-            <Header/>
+            <Header {...props}/>
             <Profile {...props}/>
             <Footer/>
         </>

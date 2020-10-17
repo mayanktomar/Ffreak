@@ -16,12 +16,12 @@ function App() {
   const [userId,setUserId] = useState(null);
 
   const getToken = async() =>{
-    const data = await localStorage.getItem('token');
+    let data = await localStorage.getItem('token');
     setToken(data);
   }
 
   const getUserId=async()=>{
-    const data = await localStorage.getItem('userId');
+    let data = await localStorage.getItem('userId');
     setUserId(data);
   }
 

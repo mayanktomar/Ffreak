@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button,Modal, ModalHeader, ModalBody, ModalFooter,Form, FormGroup, Label, Input, FormTex } from 'reactstrap';
+import { Button,Modal, ModalHeader, ModalBody, ModalFooter,Form, FormGroup, Label, Input, FormTex,Spinner } from 'reactstrap';
 import headvector from "../assets/headvector.svg";
 import axios from "axios";
 
@@ -14,7 +14,8 @@ class RegisterModal extends Component {
             gender:'',
             age:'',
             weight:'',
-            height:''
+            height:'',
+            loader:false
         }
     }
 
@@ -45,6 +46,7 @@ class RegisterModal extends Component {
 
     onRegSubmit=async (event)=>{
         event.preventDefault();
+        this.setState({loader:true});
         await axios.post('/auth/create-user', {
             "name":this.state.name,
             "email":this.state.email,
@@ -55,6 +57,7 @@ class RegisterModal extends Component {
             "weight": this.state.weight
           })
           .then(function (response) {
+            this.setState({loader:false});
               alert(response.data.message);
           })
           .catch(function (error) {
@@ -115,7 +118,7 @@ class RegisterModal extends Component {
 
                         </ModalBody>
                         <ModalFooter>
-                         <Button disabled={!this.handleDisabled()} onClick={this.onRegSubmit}>Register</Button>
+                         <Button disabled={!this.handleDisabled()} onClick={this.onRegSubmit}>{this.state.loader?<Spinner/>:"Register"} </Button>
                         </ModalFooter>
                   </Modal>
         )
