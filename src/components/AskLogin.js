@@ -46,7 +46,7 @@ export class AskLogin extends Component {
                 </div>
             </div>
             <RegisterModal isRegModalOpen={this.state.isRegModalOpen} toggleRegModal={this.toggleRegModal}/>
-            <LoginModal isLogModalOpen={this.state.isLogModalOpen} toggleLogModal={this.toggleLogModal}/>
+            <LoginModal {...this.props} isLogModalOpen={this.state.isLogModalOpen} toggleLogModal={this.toggleLogModal}/>
         </div>
         )
     }

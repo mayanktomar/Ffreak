@@ -7,7 +7,7 @@ function AuthScreen(props){
     return (
         <>
             <Header/>
-            <AskLogin/>
+            <AskLogin {...props}/>
             <Footer/>
         </>
     )

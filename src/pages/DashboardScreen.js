@@ -7,7 +7,7 @@ function DashboardScreen(props){
     return(
         <>
             <Header/>
-            <UserDashboard/>
+            <UserDashboard {...props}/>
             <Footer/>
         </>
     )

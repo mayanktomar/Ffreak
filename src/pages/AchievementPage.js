@@ -7,7 +7,7 @@ function AchievementPage(props){
     return(
         <>
             <Header/>
-            <Achievements/>
+            <Achievements {...props}/>
             <Footer/>
         </>
     )
