@@ -54,7 +54,7 @@ export class Header extends Component {
           </Nav>
           <NavbarText><i class="fa fa-user" aria-hidden="true"></i></NavbarText>
         </Collapse>
-        {this.context.token?
+        {this.context.token!=="null"?
         <IoMdLogOut onClick={this.logoutHandler}/>:null}
       </Navbar>
             </div>

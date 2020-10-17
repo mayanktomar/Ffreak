@@ -122,6 +122,27 @@ import {
     {
       name: 'Page G', amt:5555
     },
+    {
+      name: 'Page A', amt:5555
+    },
+    {
+      name: 'Page B', amt:5555
+    },
+    {
+      name: 'Page C', amt:5555
+    },
+    {
+      name: 'Page D', amt:5555
+    },
+    {
+      name: 'Page E', amt:5555
+    },
+    {
+      name: 'Page F', amt:5555
+    },
+    {
+      name: 'Page G', amt:5555
+    },
   ];
 
 export class Achievements extends Component {
@@ -142,9 +163,7 @@ export class Achievements extends Component {
         <YAxis />
         <Tooltip />
         <Legend />
-        <Bar dataKey="pv" stackId="a" fill="#8884d8" />
         <Bar dataKey="amt" stackId="a" fill="#82ca9d" />
-        <Bar dataKey="uv" fill="#ffc658" />
       </BarChart>
                 
             </div>

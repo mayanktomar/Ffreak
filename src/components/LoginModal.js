@@ -56,7 +56,7 @@ class LoginModal extends Component {
 
     responseGoogle = (response) => {
         this.setState({loader:true});
-
+        if(response.tokenObj){
         Axios.post(`/auth/social-login`,{
             token:response.tokenObj.id_token
         }).then((response)=>{
@@ -72,6 +72,10 @@ class LoginModal extends Component {
         .catch(function (error) {
             alert(error);
         });
+    }
+    else {
+        this.setState({loader:false})
+    }
     }
 
     render(){
