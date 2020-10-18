@@ -84,7 +84,7 @@ export class UserDashboard extends Component {
                 </Modal>
             <div className="container dashhead">
                 <div className="row">
-                    <div className="col-md-4">
+                    <div className="col-md-4" style={{marginTop:20}}>
                     <AnimatedProgressProvider
                         valueStart={0}
                         valueEnd={66}
@@ -135,7 +135,7 @@ export class UserDashboard extends Component {
                         </Card>
                     </div>
                     
-                    <div className="col-md-4">
+                    <div className="col-md-4" style={{marginTop:20}}>
                     <AnimatedProgressProvider
                         valueStart={0}
                         valueEnd={66}
@@ -186,7 +186,7 @@ export class UserDashboard extends Component {
                         </Card>
                     </div>
 
-                    <div className="col-md-4">
+                    <div className="col-md-4" style={{marginTop:20}}>
                     <AnimatedProgressProvider
                         valueStart={0}
                         valueEnd={66}
