@@ -204,8 +204,10 @@ export class UserDashboard extends Component {
              });
         }
         this.setState({
+            userTime:this.state.userTime+=parseInt(((this.state.runningtime/1000)/60)),
             isRunning:false,
             runningtime:0
+            
         })
         
     }
@@ -302,7 +304,9 @@ export class UserDashboard extends Component {
     }
 
     deleteTask=(event)=>{
+        
         const id=event.target.id;
+        console.log(id);
         axios.put('/task/mark-task-completed/'+id)
         .then( (response) => {
             const data = [...this.state.userGoals];
@@ -349,7 +353,7 @@ export class UserDashboard extends Component {
                 <tr>
                 <td>{g.heading}</td>
                 <td>{moment(g.endDate).format("DD-MM-YYYY")}</td>
-                <td><Button id={g._id} onClick={this.deleteTask}><AiOutlineCheckCircle  /></Button></td>
+                <td><Button id={g._id} style={{background:'transparent',paddingTop:'0px'}} onClick={this.deleteTask}><AiOutlineCheckCircle  /></Button></td>
             </tr>
             )}
             else{
@@ -407,6 +411,7 @@ export class UserDashboard extends Component {
                     </ModalFooter>
                 </Modal>
             <div className="container dashhead">
+                <h2 className="headings">Dashboard</h2>
                 <div className="row">
                     <div className="col-md-4" style={{marginTop:20}}>
                     <AnimatedProgressProvider
@@ -485,7 +490,7 @@ export class UserDashboard extends Component {
                             <tr>
                                     <th>Goal</th>
                                     <th>Deadline</th>
-                                    <th>Done</th>
+                                    <th></th>
                                 </tr>
                                {goaltable}
                                 </Table>
@@ -499,7 +504,7 @@ export class UserDashboard extends Component {
                     <div className="col-md-4" style={{marginTop:20}}>
                     <AnimatedProgressProvider
                         valueStart={0}
-                        valueEnd={this.state.timeExist==true?(this.state.userTime/60)*100:0}
+                        valueEnd={this.state.timeExist==true?(this.state.userTime/120)*100:0}
                         duration={1.4}
                         easingFunction={easeQuadInOut}
                         >

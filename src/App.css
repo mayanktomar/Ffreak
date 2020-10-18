@@ -97,9 +97,9 @@ h1,p,h2{
   height:auto;
 }
 
-.dashhead{
-  padding-top: 5%;
-}
+/* .dashhead{
+  padding-top: 2%;
+} */
 .dashhead h2{
   text-align: center;
 }

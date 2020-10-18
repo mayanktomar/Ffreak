@@ -2,10 +2,10 @@ import Axios from 'axios';
 import React, { Component } from 'react';
 import {
     Card, CardImg, CardText, CardBody,
-    CardTitle, CardSubtitle, Button, Table, Badge
+    CardTitle, CardSubtitle, Button, Table, Badge, Modal, ModalHeader, ModalBody, ModalFooter,Form, FormGroup, Label, Input, FormText
   } from 'reactstrap';
 import { ClientContext } from '../context/clientContext';
-  
+import axios from 'axios';  
 
 export class Profile extends Component {
     static contextType = ClientContext;
@@ -14,7 +14,11 @@ export class Profile extends Component {
         this.state={
             data:{},
             weight:[],
-            height:[]
+            height:[],
+            isModalOpen:false,
+            updatedheight:'',
+            updatedweight:'',
+            updatedage:''
         }
     }
 
@@ -30,6 +34,48 @@ export class Profile extends Component {
         this.getUserId();
     }
 
+    toggleModal=()=>{
+        this.setState({
+            isModalOpen:!this.state.isModalOpen
+        })
+    }
+    onchange=(event)=>{
+        const target=event.target;
+        const name=target.name;
+        const value=target.value;
+        console.log(name)
+        this.setState({
+            [name]:value
+        })
+    }
+
+    onSubmit=()=>{
+        const temp={};
+        if (this.state.updatedheight!='')
+        {
+            temp["height"]=this.state.updatedheight
+        }
+        if (this.state.updatedweight!='')
+        {
+            temp["weight"]=this.state.updatedweight
+        }
+        if (this.state.updatedage!='')
+        {
+            temp["age"]=this.state.updatedage
+        }
+        
+
+        axios.put('/user/update-user/'+this.context.userId,temp)
+          .then(function (response) {
+            console.log(response);
+            
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+          this.toggleModal();
+         
+    }
     render() {
         let badge;
         if(this.state.data.points<=10){
@@ -47,6 +93,31 @@ export class Profile extends Component {
         }
         return (
             <div style={{height:"88vh",paddingTop:30}}>
+                <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal} >
+                    <ModalHeader toggle={this.toggleModal}>Update Profile</ModalHeader>
+                    <ModalBody>
+                        <Form>
+                        <FormGroup>
+                            <Label for="exampleText">New weight</Label>
+                            <Input type="text" name="updatedweight" id="exampleText" onChange={this.onchange} />
+                        </FormGroup>
+                        <FormGroup>
+                            <Label for="exampleText">New height</Label>
+                            <Input type="text" name="updatedheight" id="exampleText" onChange={this.onchange}/>
+                        </FormGroup>
+                        <FormGroup>
+                            <Label for="exampleText">New age</Label>
+                            <Input type="text" name="updatedage" id="exampleText" onChange={this.onchange}/>
+                        </FormGroup>
+                        </Form>
+                        
+                    </ModalBody>
+                    <ModalFooter>
+                    {/* <Button color="primary" onClick={toggle}>Do Something</Button>{' '}
+                    <Button color="secondary" onClick={toggle}>Cancel</Button> */}
+                    <Button onClick={this.onSubmit}>Update</Button>
+                    </ModalFooter>
+                </Modal>
                 <div className="container profile">
                     <h1 className="headings">Profile</h1>
                     <img src={require('../assets/dummy.jpg')} style={{borderRadius:50,height:100,width:100,display:"block",marginLeft:"auto",marginRight:"auto",marginBottom:10}}/>
@@ -54,6 +125,7 @@ export class Profile extends Component {
                     <h6 className="prof-email">{this.state.data.email}</h6>
                     <h6 className="prof-email">Age - {this.state.data.age}</h6>
         <h6 className="prof-email">Points - <Badge color={badge}>{this.state.data.points}</Badge></h6>
+        <Button style={{backgroundColor:'#3e98c7',color:'black',display:'block',margin:'auto'}} onClick={this.toggleModal}>Update Profile</Button>
                     <div className="row">
                         <div className="col-md-6">
                         <Card>
