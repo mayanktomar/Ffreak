@@ -408,7 +408,7 @@ export class UserDashboard extends Component {
                 </Modal>
             <div className="container dashhead">
                 <div className="row">
-                    <div className="col-md-4">
+                    <div className="col-md-4" style={{marginTop:20}}>
                     <AnimatedProgressProvider
                         valueStart={0}
                         valueEnd={(this.state.totalCalories/2500)*100}
@@ -452,7 +452,7 @@ export class UserDashboard extends Component {
 
                     </div>
                     
-                    <div className="col-md-4">
+                    <div className="col-md-4" style={{marginTop:20}}>
                     <AnimatedProgressProvider
                         valueStart={0}
                         valueEnd={this.state.userpoints}
@@ -496,7 +496,7 @@ export class UserDashboard extends Component {
 
                     </div>
 
-                    <div className="col-md-4">
+                    <div className="col-md-4" style={{marginTop:20}}>
                     <AnimatedProgressProvider
                         valueStart={0}
                         valueEnd={this.state.timeExist==true?(this.state.userTime/60)*100:0}

@@ -2,7 +2,7 @@ import Axios from 'axios';
 import React, { Component } from 'react';
 import {
     Card, CardImg, CardText, CardBody,
-    CardTitle, CardSubtitle, Button, Table
+    CardTitle, CardSubtitle, Button, Table, Badge
   } from 'reactstrap';
 import { ClientContext } from '../context/clientContext';
   
@@ -31,13 +31,29 @@ export class Profile extends Component {
     }
 
     render() {
+        let badge;
+        if(this.state.data.points<=10){
+            badge="primary"
+        } else if(this.state.data.points>=10&&this.state.data.points<=30){
+            badge="info"
+        }
+        else if(this.state.data.points>=31&&this.state.data.points<=60) {
+            badge="success"
+        }
+        else if(this.state.data.points>=60&&this.state.data.points<=85) {
+            badge="warning"
+        } else {
+            badge="danger"
+        }
         return (
             <div style={{height:"88vh",paddingTop:30}}>
                 <div className="container profile">
                     <h1 className="headings">Profile</h1>
-                    <img src={require('../assets/dummy.jpg')} style={{borderRadius:50,height:100,width:100,display:"block",marginLeft:"auto",marginRight:"auto"}}/>
+                    <img src={require('../assets/dummy.jpg')} style={{borderRadius:50,height:100,width:100,display:"block",marginLeft:"auto",marginRight:"auto",marginBottom:10}}/>
                     <h6 className="prof-name">{this.state.data.name}</h6>
                     <h6 className="prof-email">{this.state.data.email}</h6>
+                    <h6 className="prof-email">Age - {this.state.data.age}</h6>
+        <h6 className="prof-email">Points - <Badge color={badge}>{this.state.data.points}</Badge></h6>
                     <div className="row">
                         <div className="col-md-6">
                         <Card>

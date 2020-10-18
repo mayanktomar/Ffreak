@@ -163,13 +163,11 @@ h1,p,h2{
   margin-bottom: 20px;
 }
 
-.react-stopwatch-timer__table{
-  color: white!important;
-  
-}
-.react-stopwatch-timer__element {
-  width: 3px !important;
-  height: 3px !important;
-  border-radius: 5px;
-  border:1px solid white;
+.user-points {
+  border:2px solid #ffe02c;
+  border-radius: 20px;
+  padding: 20px;
+  width: 60%;
+  text-align: center;
+  color: white;
 }
