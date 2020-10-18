@@ -7,13 +7,13 @@ function PrivateRoute({ component: Component, ...rest }, props) {
 
     useEffect(() => {
         if(token)
-            console.log(token);
+            console.log(typeof token);
     }, [token]);
 
     return (
         <Route {...rest}
             render={(props) =>
-                token !== "" ?
+                token !== "null" ?
                     (
                         <Component {...rest} {...props} />
                     ) :

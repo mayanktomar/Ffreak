@@ -6,7 +6,7 @@ import Header from '../components/Header';
 function AchievementPage(props){
     return(
         <>
-            <Header/>
+            <Header {...props}/>
             <Achievements {...props}/>
             <Footer/>
         </>

@@ -14,7 +14,7 @@ import moment from "moment";
 import axios from 'axios';
 import {ClientContext} from '../context/clientContext';
 import {Caloriesdata} from './Caloriesdata';
-
+import Timer from 'react-compound-timer';
 export class UserDashboard extends Component {
     static contextType=ClientContext;
     constructor(props){
@@ -25,13 +25,14 @@ export class UserDashboard extends Component {
             foodsTaken:[],
             isFoodModalOpen:false,
             isGoalModalOpen:false,
-            startDate:new Date().getUTCDate(),
+            startDate:new Date(),
             date:moment(new Date()).format("YYYY-MM-DD"),
             totalCalories:0,
             fooditem:'',
             quantity:0,
             userpoints:0,
-            goal:''
+            goal:'',
+            userGoals:[]
             
         }
     }
@@ -73,10 +74,27 @@ export class UserDashboard extends Component {
       getUserPoints=async() =>{
         const data = await localStorage.getItem('userId');
         axios.get('/user/get-specific-user/'+data)
-            .then(function (response) {
+            .then( (response) => {
                 this.setState({
                     userpoints:response.data.user.points
                 })
+               
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+
+      }
+
+      getUserTask=async() =>{
+        const data = await localStorage.getItem('userId');
+        axios.get('/task/get-user-tasks/'+data)
+            .then( (response) => {
+                console.log(response.data.tasks)
+                this.setState({
+                    userGoals:response.data.tasks
+                })
+              
                
             })
             .catch(function (error) {
@@ -89,6 +107,7 @@ export class UserDashboard extends Component {
         this.getUserId();
         this.getFoodIntake();
         this.getUserPoints();
+        this.getUserTask();
         Caloriesdata.map((c)=>{
             const temp={};
             const temp1=this.state.calorieDetail;
@@ -135,19 +154,86 @@ export class UserDashboard extends Component {
             calories: (this.state.quantity*this.state.calorieDetail[this.state.fooditem]),
             date:this.state.date
           })
-          .then(function (response) {
-            console.log(response);
+          .then( (response) => {
+           const temp=[...this.state.foodsTaken];
+           const temp1={
+            "foodName":this.state.fooditem,
+            "calories": (this.state.quantity*this.state.calorieDetail[this.state.fooditem]),
+            "date":this.state.date
+           }
+           var present=this.state.totalCalories;
+           present+=(this.state.quantity*this.state.calorieDetail[this.state.fooditem])
+           temp.push(temp1);
+           this.setState({
+               foodsTaken:temp,
+               totalCalories:present
+           })
           })
           .catch(function (error) {
             console.log(error);
           });
-          this.getUserId();
-          this.getFoodIntake();
+        //   this.getUserId();
+        //   this.getFoodIntake();
           this.toggleFoodModal();
     }
 
     onGoalSubmit=()=>{
-        
+        axios.post('/task/create-task/'+this.context.userId, {
+            "heading":this.state.goal,
+            "description":"",
+            "startDate":this.state.date,
+            "endDate":moment(this.state.startDate).format("YYYY-MM-DD"),
+            "time":"2020-10-16T06:00:00Z"
+          })
+          .then( (response) => {
+            const temp=[...this.state.userGoals];
+            const temp1={
+                "heading":this.state.goal,
+                "description":"",
+                "startDate":this.state.date,
+                "endDate":moment(this.state.startDate).format("YYYY-MM-DD"),
+                "time":"2020-10-16T06:00:00Z",
+                is_completed:false,
+                _id:response.data.tasks._id
+            };
+          
+            
+            temp.push(temp1);
+            this.setState({
+                userGoals:temp,
+                
+            })
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+         
+          this.toggleGoalModal();
+    }
+
+    deleteTask=(event)=>{
+        const id=event.target.id;
+        axios.put('/task/mark-task-completed/'+id)
+        .then( (response) => {
+            const data = [...this.state.userGoals];
+            
+            console.log(data)
+            const index = data.findIndex(
+                item => item._id === id
+            );
+            var presentpts=this.state.userpoints;
+            presentpts+=5;
+
+            data.splice(index, 1);
+            this.setState({
+                userGoals:data,
+                userpoints:presentpts
+            })
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+        // this.getUserTask();
     }
     render() {
         const dropdownoptions=this.state.foodData.map((f)=>{
@@ -166,6 +252,22 @@ export class UserDashboard extends Component {
             )
         })
         
+        const goaltable=this.state.userGoals.map((g)=>{
+            if (g.is_completed==false)
+            {
+            return(
+                <tr>
+                <td>{g.heading}</td>
+                <td>{moment(g.endDate).format("DD-MM-YYYY")}</td>
+                <td><Button id={g._id} onClick={this.deleteTask}><span style={{color:'white',fontSize:'1.5rem'}} className="fa fa-check fa-lg"></span></Button></td>
+            </tr>
+            )}
+            else{
+                return(
+                    <div></div>
+                )
+            }
+        })
         return (
             <div style={{height:"88vh",paddingTop:30}}>
                  <Modal isOpen={this.state.isFoodModalOpen} toggle={this.toggleFoodModal}>
@@ -209,7 +311,7 @@ export class UserDashboard extends Component {
                         </Form>
                     </ModalBody>
                     <ModalFooter>
-                        <Button style={{backgroundColor:'#3e98c7',width:'25%',color:'black',display:'block',margin:'auto'}}>Add</Button>
+                        <Button style={{backgroundColor:'#3e98c7',width:'25%',color:'black',display:'block',margin:'auto'}} onClick={this.onGoalSubmit}>Add</Button>
                     </ModalFooter>
                 </Modal>
             <div className="container dashhead">
@@ -288,21 +390,12 @@ export class UserDashboard extends Component {
                             <CardBody>
                             <CardTitle>Goals to be achieved</CardTitle>
                             <Table hover>
-                                <tr>
-                                    <th>Firstname</th>
-                                    <th>Lastname</th>
-                                    <th>Age</th>
+                            <tr>
+                                    <th>Goal</th>
+                                    <th>Deadline</th>
+                                    <th>Done</th>
                                 </tr>
-                                <tr>
-                                    <td>Jill</td>
-                                    <td>Smith</td>
-                                    <td>50</td>
-                                </tr>
-                                <tr>
-                                    <td>Eve</td>
-                                    <td>Jackson</td>
-                                    <td>94</td>
-                                </tr>
+                               {goaltable}
                                 </Table>
                             </CardBody>
                         </Card>
@@ -333,6 +426,32 @@ export class UserDashboard extends Component {
                         </AnimatedProgressProvider>;
                         <br/>
                         <h2>Walking distance</h2>
+                        <br/>
+                        
+                        <Timer
+    initialTime={0}
+>
+    {({ start, resume, pause, stop, reset, timerState }) => (
+        <React.Fragment>
+            <div className="timer">
+               
+                <Timer.Hours /> :
+                <Timer.Minutes /> :
+                <Timer.Seconds /> 
+                
+            </div>
+            <div>{timerState}</div>
+            <br />
+            <div>
+                <button onClick={start}>Start</button>
+                <button onClick={pause}>Pause</button>
+                <button onClick={resume}>Resume</button>
+                <button onClick={stop}>Stop</button>
+                <button onClick={reset}>Reset</button>
+            </div>
+        </React.Fragment>
+    )}
+</Timer>
                     </div>
                     
                     </div>

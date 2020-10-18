@@ -6,7 +6,7 @@ import Header from '../components/Header';
 function AuthScreen(props){
     return (
         <>
-            <Header/>
+            <Header {...props}/>
             <AskLogin {...props}/>
             <Footer/>
         </>

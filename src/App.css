@@ -135,3 +135,7 @@ h1,p,h2{
   text-align: center;
   margin-bottom: 10%;
 }
+
+.timer{
+  color: white !important;
+}

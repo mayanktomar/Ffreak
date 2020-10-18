@@ -6,7 +6,7 @@ import UserDashboard from '../components/UserDashboard';
 function DashboardScreen(props){
     return(
         <>
-            <Header/>
+            <Header {...props}/>
             <UserDashboard {...props}/>
             {/* <Footer/> */}
         </>
