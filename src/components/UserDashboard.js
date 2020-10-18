@@ -15,6 +15,8 @@ import axios from 'axios';
 import {ClientContext} from '../context/clientContext';
 import {Caloriesdata} from './Caloriesdata';
 import Timer from 'react-compound-timer';
+import {AiOutlineCheckCircle} from 'react-icons/ai';
+import ReactTimerStopwatch from 'react-stopwatch-timer';
 export class UserDashboard extends Component {
     static contextType=ClientContext;
     constructor(props){
@@ -32,8 +34,12 @@ export class UserDashboard extends Component {
             quantity:0,
             userpoints:0,
             goal:'',
-            userGoals:[]
-            
+            userGoals:[],
+            runningtime:0,
+            isRunning:false,
+            userTime:0,
+            timeExist:false,
+            timeId:''
         }
     }
 
@@ -102,12 +108,35 @@ export class UserDashboard extends Component {
             });
 
       }
+
+      getUserTime= async() =>{
+        const data = await localStorage.getItem('userId');
+         axios.post('/time/get-user-time/'+data, {
+            day:this.state.date,
+           
+          })
+          .then( (response) => {
+            if (response.data.data.length>0)
+            {
+                this.setState({
+                    userTime:response.data.data[0].total_time,
+                    timeExist:true,
+                    timeId:response.data.data[0]._id
+                })
+            }
+         console.log(response)
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }
     componentDidMount=()=>{
        
         this.getUserId();
         this.getFoodIntake();
         this.getUserPoints();
         this.getUserTask();
+        this.getUserTime();
         Caloriesdata.map((c)=>{
             const temp={};
             const temp1=this.state.calorieDetail;
@@ -121,6 +150,67 @@ export class UserDashboard extends Component {
                calorieDetail:temp1
            })
         })
+    }
+    handleClock=()=>{
+        if (this.state.isRunning)
+        {
+            clearInterval(this.timerId);
+            this.setState({
+                isRunning:false
+            })
+        }
+        else{
+            const startTime=Date.now() - this.state.runningtime;
+            this.timerId=setInterval(() => {
+                this.setState({
+                    runningtime: Date.now()-startTime,
+                    isRunning:true
+                })
+            }, 100);
+        }
+    }
+
+    handleReset=async()=>{
+        clearInterval(this.timerId);
+        if (this.state.timeExist==true)
+        {
+            const data = await localStorage.getItem('userId');
+            axios.put('/time/update-time-for-user/'+this.state.timeId, {
+              total_time:parseInt((this.state.userTime)+((this.state.runningtime/1000)/60))
+              
+             })
+             .then( (response) => {
+              
+            console.log(response)
+             })
+             .catch(function (error) {
+               console.log(error);
+             });
+        }
+        else
+        {
+            const data = await localStorage.getItem('userId');
+            axios.post('/time/update-time-for-user/'+data, {
+                day:this.state.date,
+                total_time:parseInt(((this.state.runningtime/1000)/60))
+              
+             })
+             .then( (response) => {
+              
+            console.log(response)
+             })
+             .catch(function (error) {
+               console.log(error);
+             });
+        }
+        this.setState({
+            isRunning:false,
+            runningtime:0
+        })
+        
+    }
+    formatTime=(t)=>{
+        return(t/1000).toFixed(1)
     }
     toggleFoodModal=()=>{
         console.log(this.context.userId);
@@ -259,7 +349,7 @@ export class UserDashboard extends Component {
                 <tr>
                 <td>{g.heading}</td>
                 <td>{moment(g.endDate).format("DD-MM-YYYY")}</td>
-                <td><Button id={g._id} onClick={this.deleteTask}><span style={{color:'white',fontSize:'1.5rem'}} className="fa fa-check fa-lg"></span></Button></td>
+                <td><Button id={g._id} onClick={this.deleteTask}><AiOutlineCheckCircle  /></Button></td>
             </tr>
             )}
             else{
@@ -268,6 +358,8 @@ export class UserDashboard extends Component {
                 )
             }
         })
+
+        const fromTime = new Date(0, 0, 0, 0, 0, 0, 0);
         return (
             <div style={{height:"88vh",paddingTop:30}}>
                  <Modal isOpen={this.state.isFoodModalOpen} toggle={this.toggleFoodModal}>
@@ -407,7 +499,7 @@ export class UserDashboard extends Component {
                     <div className="col-md-4">
                     <AnimatedProgressProvider
                         valueStart={0}
-                        valueEnd={66}
+                        valueEnd={this.state.timeExist==true?(this.state.userTime/60)*100:0}
                         duration={1.4}
                         easingFunction={easeQuadInOut}
                         >
@@ -416,7 +508,7 @@ export class UserDashboard extends Component {
                             return (
                             <CircularProgressbar
                                 value={value}
-                                text={`${roundedValue}%`}
+                                text={`${this.state.timeExist==true?(this.state.userTime):0}`}
                                 /* This is important to include, because if you're fully managing the
                                 animation yourself, you'll want to disable the CSS animation. */
                                 styles={buildStyles({ pathTransition: 'none', pathColor:'#9AB446', textColor:'#9AB446' })}
@@ -425,10 +517,22 @@ export class UserDashboard extends Component {
                         }}
                         </AnimatedProgressProvider>;
                         <br/>
-                        <h2>Walking distance</h2>
-                        <br/>
-                        
-                        <Timer
+                        <h2>Exercise time (min)</h2>
+                        <br/>   
+                        <Card className="card3">
+                            
+                            <CardBody>
+                            <CardTitle>Start exercising</CardTitle>
+                            <Button style={{backgroundColor:'#ffe02c',width:'30%',color:'black',float:'left'}} onClick={this.handleClock}>{this.state.isRunning==false?"Start":"pause"}</Button>
+                    <Button style={{backgroundColor:'#ffe02c',width:'30%',color:'black',float:'right'}} onClick={this.handleReset}>End</Button>
+                    <br/>
+                    <h2>{this.formatTime(this.state.runningtime)}</h2>
+                            </CardBody>
+                        </Card>
+                   
+                        {/* <ReactTimerStopwatch isOn={true} className="react-stopwatch-timer__table" watchType="stopwatch"
+                             displayCricle={true} color="white" hintColor="white" fromTime={fromTime}/> */}
+                        {/* <Timer
     initialTime={0}
 >
     {({ start, resume, pause, stop, reset, timerState }) => (
@@ -451,7 +555,7 @@ export class UserDashboard extends Component {
             </div>
         </React.Fragment>
     )}
-</Timer>
+</Timer> */}
                     </div>
                     
                     </div>

@@ -22,6 +22,8 @@
     "react-move": "^6.4.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
+    "react-stopwatch": "^2.0.4",
+    "react-stopwatch-timer": "^1.0.0",
     "reactstrap": "^8.6.0",
     "recharts": "^1.8.5"
   },
