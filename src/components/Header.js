@@ -46,7 +46,7 @@ export class Header extends Component {
         return (
             <div>
         <Navbar dark expand="md">
-        <NavbarBrand href={this.context.token!==null?'/dashboard':"/"}>Ffreak</NavbarBrand>
+        <NavbarBrand className="main-logo" href={this.context.token!==null?'/dashboard':"/"}>Ffreak</NavbarBrand>
         <NavbarToggler onClick={this.toggle} />
         <Collapse isOpen={this.state.isOpen} navbar>
           <Nav className="mr-auto" navbar>
