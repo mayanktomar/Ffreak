@@ -190,7 +190,7 @@ export class UserDashboard extends Component {
         else
         {
             const data = await localStorage.getItem('userId');
-            axios.post('/time/update-time-for-user/'+data, {
+            axios.post('/time/create-time-for-user/'+data, {
                 day:this.state.date,
                 total_time:parseInt(((this.state.runningtime/1000)/60))
               
