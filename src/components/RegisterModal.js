@@ -57,12 +57,14 @@ class RegisterModal extends Component {
             "weight": this.state.weight
           })
           .then(function (response) {
-            this.setState({loader:false});
+            // this.setState({loader:false});
             alert(response.data.message);
           })
           .catch(function (error) {
             alert(error.response.data.error);
           });
+          this.props.toggleRegModal();
+
     }
 
     render(){

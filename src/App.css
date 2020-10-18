@@ -167,7 +167,7 @@ h1,p,h2{
   border:2px solid #ffe02c;
   border-radius: 20px;
   padding: 20px;
-  width: 60%;
   text-align: center;
   color: white;
+  margin-bottom: 20px;
 }

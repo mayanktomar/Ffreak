@@ -3,6 +3,8 @@ import {
   BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend} from 'recharts';
   import Axios from 'axios';
 import { Button } from 'reactstrap';
+import moment from 'moment';
+
 
 export class Achievements extends Component {
     constructor(props){
@@ -21,9 +23,12 @@ export class Achievements extends Component {
       Axios.get(`/user/get-specific-user/${data}`).then((result)=>{
           this.setState({height:result.data.user.height,weight:result.data.user.weight,data:result.data.user});
       });
-
+      
       Axios.get(`/task/get-user-tasks/${data}`).then((result)=>{
-        this.setState({tasks:result.data.tasks});
+        const data = result.data.tasks.filter(item=>{
+          return item.is_completed===true;
+        })
+        this.setState({tasks:data});
       });
     }
 
@@ -36,6 +41,19 @@ export class Achievements extends Component {
       const shareData = {
           title: "fFreak Points",
           text: `I have scored ${this.state.data.points}`,
+          url: `https://ffreak.herokuapp.com/achievement`,
+      }
+      try {
+          await navigator.share(shareData);
+      } catch (err) {
+          console.log("Something went wrong");
+      }
+    }
+
+    shareHandlerTask = async(item)=>{
+      const shareData = {
+          title: "fFreak Task Completed",
+          text: `I have completed the ${item.heading} task with 5 points`,
           url: `https://ffreak.herokuapp.com/achievement`,
       }
       try {
@@ -136,7 +154,7 @@ export class Achievements extends Component {
               </BarChart>
             </div>
             </div>
-            <div className="col-7">
+            <div className="col-lg-7 col-md-7 col-sm-12 col-xs-12">
               <div className="user-points">
                   <h4 className="title">Points</h4>
                   <h1 style={{color:badge}} className="mainPoints">{this.state.data.points}</h1>
@@ -144,8 +162,16 @@ export class Achievements extends Component {
               </div>
               <div className="user-points" style={{marginTop:30}}>
                   <h4 className="title">Tasks</h4>
-                  <h1 style={{color:badge}} className="mainPoints">{this.state.data.points}</h1>
-                  <Button onClick={this.shareHandlerPoints}>Share</Button>
+                  <h1 style={{color:badge}} className="mainPoints">{this.state.tasks.length}</h1>
+                  {this.state.tasks.map(g=>{
+                    return <tr style={{display:"flex",flexDirection:"row",justifyContent:"space-between"}}>
+                    <td>{g.heading}</td>
+                    <td>{moment(g.endDate).format("DD-MM-YYYY")}</td>
+                    <td>
+                  <div onClick={this.shareHandlerTask(g)} style={{cursor:"pointer",color:"#ffe02c"}}>Share</div>
+                    </td>
+                </tr>
+                  })}
               </div>
             </div>
           </div>

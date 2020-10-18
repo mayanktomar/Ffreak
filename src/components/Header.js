@@ -69,7 +69,7 @@ export class Header extends Component {
     shareHandler = async()=>{
         const shareData = {
             title: "fFreak",
-            text: "For all the Fitness Freaks out ther",
+            text: "For all the Fitness Freaks out there",
             url: `https://ffreak.herokuapp.com/`,
         }
         try {
