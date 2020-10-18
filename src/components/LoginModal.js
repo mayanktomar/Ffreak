@@ -45,7 +45,6 @@ class LoginModal extends Component {
               this.context.setToken(response.data.token);
               localStorage.setItem('userId',response.data.userId);
               this.context.setUserId(response.data.userId);
-              alert(response.data.message);
               this.setState({loader:false});
               this.props.history.push('/dashboard');
           })
@@ -65,7 +64,6 @@ class LoginModal extends Component {
             this.context.setToken(response.data.token);
             localStorage.setItem('userId',response.data.userId);
             this.context.setUserId(response.data.userId);
-            alert(response.data.message);
             this.setState({loader:false});
             this.props.history.push('/dashboard');
         })

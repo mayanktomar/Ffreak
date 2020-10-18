@@ -8,7 +8,6 @@ function AchievementPage(props){
         <>
             <Header {...props}/>
             <Achievements {...props}/>
-            <Footer/>
         </>
     )
 }

@@ -58,7 +58,7 @@ class RegisterModal extends Component {
           })
           .then(function (response) {
             this.setState({loader:false});
-              alert(response.data.message);
+            alert(response.data.message);
           })
           .catch(function (error) {
             alert(error.response.data.error);

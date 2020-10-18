@@ -8,7 +8,6 @@ function DashboardScreen(props){
         <>
             <Header {...props}/>
             <UserDashboard {...props}/>
-            <Footer/>
         </>
     )
 }

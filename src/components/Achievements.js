@@ -149,24 +149,46 @@ export class Achievements extends Component {
     static jsfiddleUrl = 'https://jsfiddle.net/alidingling/9hjfkp73/';
     render() {
         return (
-            <div>
-                  <BarChart
-        width={500}
-        height={300}
-        data={data}
-        margin={{
-          top: 20, right: 30, left: 20, bottom: 5,
-        }}
-      >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        <Bar dataKey="amt" stackId="a" fill="#82ca9d" />
-      </BarChart>
-                
+          <div style={{height:"83vh",display:"flex",justifyContent:"center",flexDirection:"column"}}>
+            <h1 style={{textAlign:"center"}}>Achievements</h1>
+            <div style={{marginTop:50}}>
+              <h2 style={{textAlign:"center"}}>Weight</h2>
+              <BarChart
+                width={330}
+                height={200}
+                data={data}
+                margin={{
+                  top: 20, bottom: 5,
+                }}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="amt" stackId="a" fill="#82ca9d" />
+              </BarChart>
             </div>
+
+            <div>
+              <h2 style={{textAlign:"center"}}>Height</h2>
+              <BarChart
+                width={330}
+                height={200}
+                data={data}
+                margin={{
+                  top: 20, bottom: 5
+                }}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="amt" stackId="a" fill="orange" />
+              </BarChart>
+            </div>
+          </div>
         )
     }
 }
