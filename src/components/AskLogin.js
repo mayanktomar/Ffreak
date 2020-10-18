@@ -31,9 +31,9 @@ export class AskLogin extends Component {
         <div>
             <div class="container loginhead">
                 <div class="row">
-                    <div class="col-md-6">
-                        <h1>Lorem Ipsum Dolor Loren Ipsum Dolor</h1>
-                        <p style={{fontFamily:'italic'}}>Loren Ipsum Dolor</p>
+                    <div class="col-md-6" style={{marginTop:50}}>
+                        <h1 style={{color:"#5bc0de",width:"80%",fontFamily:"Roboto"}}>Explore new way of being Fit</h1>
+                        <p style={{fontSize:17,fontFamily:"Roboto"}}>Login/Signup to continue</p>
                         <br/>
                         <Button style={{backgroundColor:'#ffe02c',width:'75%',color:'black'}} onClick={this.toggleLogModal}>Login</Button>
                         <br/>

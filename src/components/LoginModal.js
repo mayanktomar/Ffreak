@@ -45,7 +45,6 @@ class LoginModal extends Component {
               this.context.setToken(response.data.token);
               localStorage.setItem('userId',response.data.userId);
               this.context.setUserId(response.data.userId);
-              alert(response.data.message);
               this.setState({loader:false});
               this.props.history.push('/dashboard');
           })
@@ -56,7 +55,7 @@ class LoginModal extends Component {
 
     responseGoogle = (response) => {
         this.setState({loader:true});
-
+        if(response.tokenObj){
         Axios.post(`/auth/social-login`,{
             token:response.tokenObj.id_token
         }).then((response)=>{
@@ -65,13 +64,16 @@ class LoginModal extends Component {
             this.context.setToken(response.data.token);
             localStorage.setItem('userId',response.data.userId);
             this.context.setUserId(response.data.userId);
-            alert(response.data.message);
             this.setState({loader:false});
             this.props.history.push('/dashboard');
         })
         .catch(function (error) {
             alert(error);
         });
+    }
+    else {
+        this.setState({loader:false})
+    }
     }
 
     render(){

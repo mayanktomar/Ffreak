@@ -8,7 +8,6 @@ function ProfileScreen(props){
         <>
             <Header {...props}/>
             <Profile {...props}/>
-            <Footer/>
         </>
     )
 }
