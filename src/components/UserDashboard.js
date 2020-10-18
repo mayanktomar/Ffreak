@@ -430,13 +430,14 @@ export class UserDashboard extends Component {
                                 animation yourself, you'll want to disable the CSS animation. */
                                 styles={buildStyles({ pathTransition: 'none',  })}
                             >
-                               
+                              
                             </CircularProgressbarWithChildren>
                             );
                         }}
                         </AnimatedProgressProvider>;
                         <br/>
                         <h2>Calorie Intake</h2>
+                        
                         <br/>
                         <Card className="card1">
                             
@@ -535,32 +536,6 @@ export class UserDashboard extends Component {
                             </CardBody>
                         </Card>
                    
-                        {/* <ReactTimerStopwatch isOn={true} className="react-stopwatch-timer__table" watchType="stopwatch"
-                             displayCricle={true} color="white" hintColor="white" fromTime={fromTime}/> */}
-                        {/* <Timer
-    initialTime={0}
->
-    {({ start, resume, pause, stop, reset, timerState }) => (
-        <React.Fragment>
-            <div className="timer">
-               
-                <Timer.Hours /> :
-                <Timer.Minutes /> :
-                <Timer.Seconds /> 
-                
-            </div>
-            <div>{timerState}</div>
-            <br />
-            <div>
-                <button onClick={start}>Start</button>
-                <button onClick={pause}>Pause</button>
-                <button onClick={resume}>Resume</button>
-                <button onClick={stop}>Stop</button>
-                <button onClick={reset}>Reset</button>
-            </div>
-        </React.Fragment>
-    )}
-</Timer> */}
                     </div>
                     
                     </div>

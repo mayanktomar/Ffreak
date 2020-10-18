@@ -56,11 +56,12 @@ class RegisterModal extends Component {
             "height": this.state.height,
             "weight": this.state.weight
           })
-          .then(function (response) {
-            // this.setState({loader:false});
+          .then( (response) => {
+            this.setState({loader:false});
             alert(response.data.message);
           })
-          .catch(function (error) {
+          .catch( (error) => {
+            this.setState({loader:false});
             alert(error.response.data.error);
           });
           this.props.toggleRegModal();

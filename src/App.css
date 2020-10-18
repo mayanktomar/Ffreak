@@ -171,3 +171,7 @@ h1,p,h2{
   color: white;
   margin-bottom: 20px;
 }
+
+.card-title{
+  font-weight: bold;
+}
