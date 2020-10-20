@@ -158,7 +158,7 @@ export class Achievements extends Component {
               <div className="user-points">
                   <h4 className="title">Points</h4>
                   <h1 style={{color:badge}} className="mainPoints">{this.state.data.points}</h1>
-                  <Button>Share</Button>
+                  <Button onClick={this.shareHandlerPoints}>Share</Button>
               </div>
               <div className="user-points" style={{marginTop:30}}>
                   <h4 className="title">Tasks</h4>
